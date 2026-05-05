@@ -627,6 +627,56 @@ main > .search-form {
   max-width: 460px;
 }
 
+.hint-admin-panel {
+  align-items: start;
+}
+
+.hint-admin-status {
+  margin: 0;
+  color: var(--accent-dark);
+  font-weight: 800;
+}
+
+.hint-admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hint-admin-actions button {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.hint-admin-actions button:hover {
+  background: var(--accent-dark);
+}
+
+.hint-admin-actions .danger-action {
+  background: var(--danger-text);
+}
+
+.hint-admin-actions .danger-action:hover {
+  background: #7f1723;
+}
+
+.hint-admin-actions .secondary-action-button {
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--accent-dark);
+}
+
+.hint-admin-actions .secondary-action-button:hover {
+  border-color: #a9d4cf;
+  background: var(--soft);
+}
+
 .hint-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1135,6 +1185,7 @@ tr:last-child td {
 
   .hero-actions,
   .flag-submit-actions,
+  .hint-admin-actions,
   .notice-inner,
   .success-actions {
     align-items: flex-start;

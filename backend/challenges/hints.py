@@ -84,6 +84,22 @@ def unlock_next_hint():
         return state.unlocked_count, True
 
 
+def lock_last_hint():
+    with transaction.atomic():
+        state, _ = HintState.objects.select_for_update().get_or_create(
+            key=HINT_STATE_KEY,
+            defaults={'unlocked_count': 0},
+        )
+
+        if state.unlocked_count <= 0:
+            return 0, False
+
+        locked_hint_number = state.unlocked_count
+        state.unlocked_count -= 1
+        state.save(update_fields=['unlocked_count', 'updated_at'])
+        return locked_hint_number, True
+
+
 def hint_unlock_rate_key(request):
     forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR', '').split(',')[0].strip()
     client_ip = forwarded_for or request.META.get('REMOTE_ADDR', 'unknown')

@@ -13,26 +13,30 @@
   <div class="section-title">
     <div>
       <p class="eyebrow">Admin</p>
-      <h2 id="hint-admin-title">힌트 공개</h2>
+      <h2 id="hint-admin-title">관리자 모드</h2>
     </div>
     <p>현재 {{ unlocked_count }}개 / {{ total_hints }}개 공개 중입니다.</p>
   </div>
-  <form class="hint-unlock-form" action="{% url 'hints' %}" method="post">
-    {% csrf_token %}
-    <label class="flag-input" for="admin_code">
-      <span>관리자 코드</span>
-      <input
-        id="admin_code"
-        name="admin_code"
-        type="password"
-        value=""
-        placeholder="관리자 코드 입력"
-        autocomplete="off"
-        spellcheck="false"
-      >
-    </label>
-    <div class="flag-submit-actions">
-      <button type="submit">힌트 공개</button>
+  {% if admin_mode %}
+    <div class="hint-unlock-form hint-admin-panel">
+      <p class="hint-admin-status">관리자 모드 활성화됨</p>
+      <div class="hint-admin-actions">
+        <form action="{% url 'hints' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="unlock">
+          <button type="submit">다음 힌트 공개</button>
+        </form>
+        <form action="{% url 'hints' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="lock">
+          <button class="danger-action" type="submit">마지막 힌트 되돌리기</button>
+        </form>
+        <form action="{% url 'hints' %}" method="post">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="logout">
+          <button class="secondary-action-button" type="submit">관리자 모드 종료</button>
+        </form>
+      </div>
       {% if message %}
         <output class="flag-result" aria-live="polite">{{ message }}</output>
       {% endif %}
@@ -40,7 +44,33 @@
         <output class="flag-result flag-result-error" aria-live="polite">{{ error }}</output>
       {% endif %}
     </div>
-  </form>
+  {% else %}
+    <form class="hint-unlock-form" action="{% url 'hints' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="login">
+      <label class="flag-input" for="admin_code">
+        <span>관리자 코드</span>
+        <input
+          id="admin_code"
+          name="admin_code"
+          type="password"
+          value=""
+          placeholder="관리자 코드 입력"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </label>
+      <div class="flag-submit-actions">
+        <button type="submit">관리자 모드 활성화</button>
+        {% if message %}
+          <output class="flag-result" aria-live="polite">{{ message }}</output>
+        {% endif %}
+        {% if error %}
+          <output class="flag-result flag-result-error" aria-live="polite">{{ error }}</output>
+        {% endif %}
+      </div>
+    </form>
+  {% endif %}
 </section>
 
 <section class="container hint-list-section" aria-label="공개 힌트 목록">
