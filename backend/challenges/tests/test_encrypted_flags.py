@@ -67,3 +67,29 @@ class EncryptedFlagStoreTests(TestCase):
                 leaks.append(path.relative_to(project_root).as_posix())
 
         self.assertEqual(leaks, [])
+
+    def test_public_file_names_do_not_reveal_solution_techniques(self):
+        project_root = Path(__file__).resolve().parents[3]
+        excluded_parts = {
+            '.git',
+            '.venv',
+            '__pycache__',
+        }
+        forbidden_fragments = (
+            'debug_api',
+            'html_comment',
+            'idor',
+            'localstorage_admin',
+            'sourcemap',
+            'sqli',
+        )
+        leaks = []
+
+        for path in project_root.rglob('*'):
+            if any(part in excluded_parts for part in path.parts):
+                continue
+            relative_path = path.relative_to(project_root).as_posix().lower()
+            if any(fragment in relative_path for fragment in forbidden_fragments):
+                leaks.append(relative_path)
+
+        self.assertEqual(leaks, [])

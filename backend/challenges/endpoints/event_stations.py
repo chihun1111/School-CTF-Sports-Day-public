@@ -7,13 +7,13 @@ from challenges.flag_store import get_flag
 
 
 def html_comment(request):
-    return render(request, 'portal/frontend/html_comment.html', {
+    return render(request, 'portal/stations/campus.html', {
         'html_comment_flag': get_flag('html_comment'),
     })
 
 
 def sourcemap(request):
-    return render(request, 'portal/frontend/sourcemap.html')
+    return render(request, 'portal/stations/security.html')
 
 
 def sourcemap_js(request):
@@ -60,7 +60,7 @@ def sourcemap_map(request):
 
 
 def localstorage_admin(request):
-    return render(request, 'portal/frontend/localstorage_admin.html')
+    return render(request, 'portal/stations/operations.html')
 
 
 def localstorage_admin_js(request):

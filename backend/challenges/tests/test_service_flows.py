@@ -10,7 +10,7 @@ class BackendChallengeTests(EncryptedFlagStoreMixin, TestCase):
     def test_status_page_and_hints_are_reachable(self):
         page_response = self.client.get('/system/status/')
         robots_response = self.client.get('/robots.txt')
-        app_js_path = finders.find('challenges/debug_api/app.js')
+        app_js_path = finders.find('challenges/status_panel/app.js')
 
         self.assertEqual(page_response.status_code, 200)
         self.assertContains(page_response, '학교 서비스 상태 페이지')

@@ -5,7 +5,7 @@ from challenges.flag_store import get_flag
 
 
 def status_page(request):
-    return render(request, 'challenges/debug_api/status.html')
+    return render(request, 'challenges/status_panel/status.html')
 
 
 def api_status(request):

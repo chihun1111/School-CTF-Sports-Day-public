@@ -36,7 +36,7 @@ def search(request):
     except Exception as exc:
         error = f'SQL Error: {exc}'
 
-    return render(request, 'challenges/sqli/search.html', {
+    return render(request, 'challenges/community/search.html', {
         'query': q,
         'rows': rows,
         'error': error,

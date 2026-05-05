@@ -10,7 +10,7 @@ IDOR_FLAG_MARKER = '__RUNTIME_IDOR_FLAG__'
 
 def index(request):
     submissions = Submission.objects.filter(user_id=CURRENT_USER['id'])
-    return render(request, 'challenges/idor/index.html', {
+    return render(request, 'challenges/assignments/index.html', {
         'submissions': submissions,
         'current_user': CURRENT_USER,
     })
@@ -21,7 +21,7 @@ def detail(request, submission_id):
     submission = get_object_or_404(Submission, id=submission_id)
     if submission.content == IDOR_FLAG_MARKER:
         submission.content = get_flag('idor')
-    return render(request, 'challenges/idor/detail.html', {
+    return render(request, 'challenges/assignments/detail.html', {
         'submission': submission,
         'current_user': CURRENT_USER,
     })

@@ -4,7 +4,7 @@ from django.db import migrations
 SQLI_FLAG_PLACEHOLDER = 'runtime flag loads from encrypted DB'
 
 
-def update_sqli_flag(apps, schema_editor):
+def update_board_marker(apps, schema_editor):
     Flag = apps.get_model('challenges', 'Flag')
     Flag.objects.update_or_create(
         id=1,
@@ -22,5 +22,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(update_sqli_flag, migrations.RunPython.noop),
+        migrations.RunPython(update_board_marker, migrations.RunPython.noop),
     ]

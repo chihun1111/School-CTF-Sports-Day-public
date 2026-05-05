@@ -24,7 +24,7 @@ def restore_copy(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('challenges', '0004_update_sqli_flag'),
+        ('challenges', '0004_update_board_marker'),
     ]
 
     operations = [

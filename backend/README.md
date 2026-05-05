@@ -46,59 +46,49 @@ backend/
   config/
   challenges/
     endpoints/
+      assignments.py
+      community.py
       common.py
-      debug_api.py
-      frontend.py
-      idor.py
-      sqli.py
+      event_stations.py
+      status_panel.py
     static/
       challenges/
-        debug_api/
+        status_panel/
       portal/
         styles.css
     templates/
       challenges/
-        debug_api/
-        idor/
-        sqli/
+        assignments/
+        community/
+        status_panel/
       portal/
         base.html
         index.html
-        frontend/
+        stations/
     migrations/
   private/        # local only, ignored by git
 ```
 
-## Challenge Routes
+## Primary Routes
 
-- `/` - unified frontend/backend challenge portal
+- `/` - unified challenge portal
 - `/flags/` - dedicated flag submission page for up to six flags
 - `/flags/check/` - flag submission checker
 - `/flags/success/` - special completion page after all flags are correct
-- `/campus/festival/` - sports-day CTF mini festival frontend challenge
-- `/clubs/security/` - CTF mini festival Source Map frontend challenge
-- `/clubs/admin/` - CTF mini festival operations localStorage frontend challenge
-- `/system/status/` - exposed debug API challenge entry page
-- `/student/assignments/` - IDOR challenge list
-- `/student/assignments/<id>/` - intentionally missing ownership check
-- `/community/board/` - intentionally vulnerable SQL search
-- `/frontend/html-comment/` - HTML comment frontend challenge
-- `/frontend/sourcemap/` - Source Map frontend challenge
-- `/frontend/localstorage-admin/` - localStorage admin frontend challenge
-- `/frontend-01-html-comment/` - document service alias
-- `/frontend-02-sourcemap/` - document service alias
-- `/frontend-03-localstorage-admin/` - document service alias
-- `/status/` - exposed debug API challenge entry page
-- `/debug-api/` - compatibility alias for the debug API challenge
+- `/campus/festival/` - event station
+- `/clubs/security/` - event station
+- `/clubs/admin/` - event station
+- `/system/status/` - service status page
+- `/student/assignments/` - assignment list
+- `/student/assignments/<id>/` - assignment detail
+- `/community/board/` - community board search
+- `/status/` - service status page
 - `/api/status` - visible status API
-- `/api/debug` - leaked debug API
-- `/robots.txt` - debug endpoint hint
-- `/submissions/` - IDOR challenge list
-- `/submissions/<id>/` - intentionally missing ownership check
+- `/api/debug` - internal diagnostics API
+- `/robots.txt` - diagnostics hint
+- `/submissions/` - assignment list
+- `/submissions/<id>/` - assignment detail
 - `/search/` - intentionally vulnerable SQL search
-- `/backend-01-debug-api/` - document service alias
-- `/backend-02-idor/` - document service alias
-- `/backend-03-sqli/` - document service alias
 
 Operator and solution documents are kept outside this public project tree.
 
