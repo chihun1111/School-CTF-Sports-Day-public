@@ -1,0 +1,39 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}컴퓨터공학과 미니 축제{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">CTF 미니 축제</p>
+  <h1>2026 CTF 미니 축제</h1>
+  <p>체육대회 기간동안 진행되는 CTF 미니 축제 정보를 확인하세요.</p>
+</section>
+
+<section class="event-layout">
+  <article class="panel event-main">
+    <p class="eyebrow">2026 Festival</p>
+    <h2>CTF 미니 축제</h2>
+    <p class="lead-text">코딩 퀴즈, 게임 대회, 보안 미션이 준비되어 있습니다.</p>
+    <dl class="status-list">
+      <dt>일시</dt>
+      <dd>체육대회 기간동안</dd>
+      <dt>참가</dt>
+      <dd>재학생 모두 참가 가능</dd>
+    </dl>
+  </article>
+
+  <aside class="panel event-side">
+    <h2>프로그램</h2>
+    <ul class="plain-list">
+      <li>알고리즘 미니 퀴즈</li>
+      <li>웹 보안 체험 부스</li>
+      <li>CTF 풀이 공유</li>
+    </ul>
+  </aside>
+</section>
+
+<!-- dev-note: first = {{ html_comment_flag }} -->
+<section id="debug-panel" class="hidden-note" hidden>
+  운영 중에는 이 영역이 숨겨져 있습니다.
+</section>
+{% endblock %}

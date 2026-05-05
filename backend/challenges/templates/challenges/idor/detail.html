@@ -1,0 +1,18 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}과제 상세 보기{% endblock %}
+
+{% block content %}
+<article class="panel">
+  <p class="eyebrow">Submission #{{ submission.id }}</p>
+  <h1>{{ submission.title }}</h1>
+  <dl class="status-list">
+    <dt>제출자</dt>
+    <dd>{{ submission.owner_name }}</dd>
+    <dt>현재 로그인</dt>
+    <dd>{{ current_user.username }}</dd>
+  </dl>
+  <hr>
+  <p class="submission-content">{{ submission.content }}</p>
+</article>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}번호가 바뀌는 과제함{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">과제 제출</p>
+  <h1>과제 제출 확인</h1>
+  <p>로그인 사용자: {{ current_user.username }}</p>
+</section>
+
+<section class="list-panel">
+  {% for submission in submissions %}
+    <a class="list-row" href="/student/assignments/{{ submission.id }}/">
+      <span class="row-id">#{{ submission.id }}</span>
+      <span>{{ submission.title }}</span>
+      <span class="row-meta">{{ submission.owner_name }}</span>
+    </a>
+  {% empty %}
+    <p>표시할 제출물이 없습니다.</p>
+  {% endfor %}
+</section>
+{% endblock %}

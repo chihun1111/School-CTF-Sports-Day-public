@@ -1,0 +1,45 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}학생 게시판 검색기{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">학생 게시판</p>
+  <h1>학생 게시판 검색기</h1>
+  <p>게시글 제목을 검색합니다. 검색 결과는 번호, 제목, 작성자 형식으로 표시됩니다.</p>
+</section>
+
+<form class="search-form" method="get" action="/community/board/">
+  <input type="text" name="q" value="{{ query }}" placeholder="게시글 제목을 검색하세요.">
+  <button type="submit">검색</button>
+</form>
+
+{% if error %}
+  <pre class="error-box">{{ error }}</pre>
+{% endif %}
+
+<section class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>번호</th>
+        <th>제목</th>
+        <th>작성자</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in rows %}
+        <tr>
+          <td>{{ row.id }}</td>
+          <td>{{ row.title }}</td>
+          <td>{{ row.author }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="3">검색 결과가 없습니다.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

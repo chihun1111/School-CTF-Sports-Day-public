@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}KDUCTF Challenges{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'portal/styles.css' %}">
+</head>
+<body>
+  <header class="site-header">
+    <div class="utility-bar">
+      <span>컴퓨터공학과</span>
+      <nav aria-label="빠른 링크">
+        <a href="/">학과홈</a>
+        <a href="/system/status/">서비스현황</a>
+        <a href="/community/board/">게시판</a>
+      </nav>
+    </div>
+    <div class="topbar">
+      <a href="/" class="brand">
+        <span class="brand-mark">KDU</span>
+        <span>
+          <strong>컴퓨터공학과</strong>
+          <small>Computer Science</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="주요 서비스">
+        <a href="/campus/festival/">미니축제</a>
+        <a href="/clubs/security/">CTF 안내</a>
+        <a href="/clubs/admin/">축제운영</a>
+        <a href="/student/assignments/">과제함</a>
+        <a href="/community/board/">게시판</a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

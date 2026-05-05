@@ -1,0 +1,17 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}CTF 미니 축제 안내{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">CTF 미니 축제 안내</p>
+  <h1>2026 CTF 미니 축제</h1>
+  <p>체육대회 기간동안 진행되며 재학생 모두 참가 가능입니다.</p>
+</section>
+
+<section id="club-app" class="panel app-shell">
+  <p>CTF 미니 축제 정보를 불러오는 중입니다.</p>
+</section>
+
+<script src="{% url 'clubs-security-js' %}"></script>
+{% endblock %}

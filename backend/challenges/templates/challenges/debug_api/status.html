@@ -1,0 +1,16 @@
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block title %}학교 서비스 상태 페이지{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <p class="eyebrow">학교 서비스</p>
+  <h1>학교 서비스 상태 페이지</h1>
+  <dl class="status-list">
+    <dt>현재 서버 상태</dt>
+    <dd id="status">확인 중</dd>
+  </dl>
+</section>
+<script src="{% static 'challenges/debug_api/app.js' %}"></script>
+{% endblock %}

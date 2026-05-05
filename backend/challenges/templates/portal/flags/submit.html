@@ -1,0 +1,56 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}플래그 제출{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Flag Submit</p>
+  <h1>플래그 제출</h1>
+  <p>찾은 인증 문자열을 최대 6개까지 입력하세요. 모두 맞추면 특별 페이지로 이동합니다.</p>
+</section>
+
+<section class="container flag-submit-section" aria-labelledby="flag-submit-title">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">Secure Check</p>
+      <h2 id="flag-submit-title">플래그 확인</h2>
+    </div>
+    <p>입력값은 결과 계산에만 사용하고, 제출 후 화면에 다시 노출하지 않습니다.</p>
+  </div>
+  <form class="flag-submit-form" action="{% url 'flag-check' %}" method="post">
+    {% csrf_token %}
+    <div class="flag-input-grid">
+      {% for field in flag_fields %}
+        <label class="flag-input" for="{{ field.name }}">
+          <span>{{ field.label }}</span>
+          <input
+            id="{{ field.name }}"
+            name="{{ field.name }}"
+            type="text"
+            value="{{ field.value }}"
+            placeholder="플래그 입력"
+            autocomplete="off"
+            spellcheck="false"
+          >
+        </label>
+      {% endfor %}
+    </div>
+    <div class="flag-submit-actions">
+      <button type="submit">확인하기</button>
+      {% if flag_error %}
+        <output class="flag-result flag-result-error" aria-live="polite">
+          {{ flag_error }}
+        </output>
+      {% endif %}
+      {% if flag_result %}
+        <output class="flag-result" aria-live="polite">
+          정답 {{ flag_result.correct_count }}개 / {{ flag_result.total_count }}개
+        </output>
+      {% endif %}
+    </div>
+    {% if flag_result %}
+      <p class="flag-result-note">입력한 6칸 중 중복을 제외하고 채점했습니다.</p>
+    {% endif %}
+  </form>
+</section>
+{% endblock %}
