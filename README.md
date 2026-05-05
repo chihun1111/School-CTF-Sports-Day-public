@@ -45,6 +45,7 @@ Create `backend/.env` on the deployment server:
 DJANGO_SECRET_KEY=change-this-for-school-deployment
 CTF_FLAG_DB_PATH=private/ctf_flags.sqlite3
 CTF_FLAG_DB_PASSWORD=change-this-strong-password
+CTF_BONUS_TOKEN_KEY=change-this-bonus-token-key
 ```
 
 Then generate the encrypted flag DB from server-side environment variables:
@@ -56,6 +57,7 @@ export CTF_FLAG_LOCALSTORAGE_ADMIN="actual flag value"
 export CTF_FLAG_DEBUG_API="actual flag value"
 export CTF_FLAG_IDOR="actual flag value"
 export CTF_FLAG_SQLI="actual flag value"
+export CTF_FLAG_BONUS="actual special award value"
 python manage.py create_flag_db
 ```
 

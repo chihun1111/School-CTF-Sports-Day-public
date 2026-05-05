@@ -22,6 +22,7 @@ Do not commit `.env` or the encrypted flag DB. For school deployment, create
 DJANGO_SECRET_KEY=change-this-for-school-deployment
 CTF_FLAG_DB_PATH=private/ctf_flags.sqlite3
 CTF_FLAG_DB_PASSWORD=change-this-strong-password
+CTF_BONUS_TOKEN_KEY=change-this-bonus-token-key
 ```
 
 Create the encrypted DB from server-side environment variables:
@@ -33,6 +34,7 @@ $env:CTF_FLAG_LOCALSTORAGE_ADMIN="actual flag value"
 $env:CTF_FLAG_DEBUG_API="actual flag value"
 $env:CTF_FLAG_IDOR="actual flag value"
 $env:CTF_FLAG_SQLI="actual flag value"
+$env:CTF_FLAG_BONUS="actual special award value"
 python manage.py create_flag_db
 ```
 
@@ -47,6 +49,7 @@ backend/
   challenges/
     endpoints/
       assignments.py
+      bonus.py
       community.py
       common.py
       event_stations.py
@@ -64,6 +67,7 @@ backend/
       portal/
         base.html
         index.html
+        bonus/
         stations/
     migrations/
   private/        # local only, ignored by git
@@ -75,6 +79,10 @@ backend/
 - `/flags/` - dedicated flag submission page for up to six flags
 - `/flags/check/` - flag submission checker
 - `/flags/success/` - special completion page after all flags are correct
+- `/bonus/vault/` - special-award confirmation page
+- `/bonus/check/` - special-award confirmation checker
+- `/bonus/flag-check/` - final bonus flag checker
+- `/bonus/prize/` - protected special-award page
 - `/campus/festival/` - event station
 - `/clubs/security/` - event station
 - `/clubs/admin/` - event station

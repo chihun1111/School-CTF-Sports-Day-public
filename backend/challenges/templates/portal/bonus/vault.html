@@ -1,0 +1,45 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}특별상 접수{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Special Desk</p>
+  <h1>특별상 접수</h1>
+  <p>보너스 문제의 확인 코드를 제출하는 페이지입니다.</p>
+</section>
+
+<section class="container flag-submit-section" aria-labelledby="bonus-vault-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Check</p>
+      <h2 id="bonus-vault-title">참가 확인</h2>
+    </div>
+  </div>
+
+  <form class="flag-submit-form" action="{% url 'bonus-check' %}" method="post">
+    {% csrf_token %}
+    <label class="flag-input" for="bonus-ticket">
+      <span>전체 확인 코드</span>
+      <textarea
+        id="bonus-ticket"
+        name="ticket"
+        rows="7"
+        placeholder="확인 코드 전체 붙여넣기"
+        autocomplete="off"
+        spellcheck="false"
+        wrap="off"
+      ></textarea>
+    </label>
+
+    <div class="flag-submit-actions">
+      <button type="submit">확인하기</button>
+      {% if error %}
+        <output class="flag-result flag-result-error" aria-live="polite">
+          {{ error }}
+        </output>
+      {% endif %}
+    </div>
+  </form>
+</section>
+{% endblock %}

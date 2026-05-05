@@ -6,6 +6,3 @@ async function loadStatus() {
 }
 
 loadStatus();
-
-// Development-only test API
-// Remove before deployment: /api/debug

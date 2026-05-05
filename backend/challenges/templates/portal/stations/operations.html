@@ -1,12 +1,12 @@
 {% extends 'portal/base.html' %}
 
-{% block title %}축제 운영 관리{% endblock %}
+{% block title %}운영 현황{% endblock %}
 
 {% block content %}
 <section class="page-head">
-  <p class="eyebrow">축제 운영 관리</p>
+  <p class="eyebrow">운영 현황</p>
   <h1>CTF 미니 축제 운영</h1>
-  <p>체육대회 기간동안 진행되는 CTF 미니 축제 운영 상태와 내부 공지를 확인하는 관리 페이지입니다.</p>
+  <p>체육대회 기간동안 진행되는 CTF 미니 축제 운영 상태를 확인하는 페이지입니다.</p>
 </section>
 
 <section class="admin-layout">
@@ -14,16 +14,16 @@
     <h2>내 계정</h2>
     <dl class="status-list">
       <dt>사용자</dt>
-      <dd>guest-user</dd>
+      <dd>참가자</dd>
       <dt>현재 상태</dt>
       <dd id="user-state">확인 중</dd>
     </dl>
   </article>
 
   <article id="admin-panel" class="panel admin-panel" hidden>
-    <p class="eyebrow">Admin Only</p>
-    <h2>관리자 패널</h2>
-    <p>축제 운영진 전용 공지와 내부 설정을 확인할 수 있습니다.</p>
+    <p class="eyebrow">Notice</p>
+    <h2>운영 메모</h2>
+    <p>행사 운영 관련 메모를 확인할 수 있습니다.</p>
     <pre id="flag" class="flag-box"></pre>
   </article>
 </section>

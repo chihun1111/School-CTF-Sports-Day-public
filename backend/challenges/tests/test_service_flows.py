@@ -16,7 +16,7 @@ class BackendChallengeTests(EncryptedFlagStoreMixin, TestCase):
         self.assertContains(page_response, '학교 서비스 상태 페이지')
         self.assertContains(robots_response, 'Disallow: /api/debug')
         self.assertIsNotNone(app_js_path)
-        self.assertIn('/api/debug', Path(app_js_path).read_text(encoding='utf-8'))
+        self.assertNotIn('/api/debug', Path(app_js_path).read_text(encoding='utf-8'))
 
     def test_debug_api_exposes_flag(self):
         response = self.client.get('/api/debug')
@@ -44,7 +44,7 @@ class BackendChallengeTests(EncryptedFlagStoreMixin, TestCase):
 
         self.assertEqual(normal_response.status_code, 200)
         self.assertContains(normal_response, '프로그래밍 과제 안내')
-        self.assertContains(error_response, 'SQL Error')
+        self.assertContains(error_response, '요청을 처리하지 못했습니다.')
 
     def test_board_uses_ctf_mini_festival_copy(self):
         response = self.client.get('/community/board/', {'q': 'CTF'})

@@ -6,7 +6,7 @@
 <section class="page-head">
   <p class="eyebrow">Flag Submit</p>
   <h1>플래그 제출</h1>
-  <p>찾은 인증 문자열을 최대 6개까지 입력하세요. 모두 맞추면 특별 페이지로 이동합니다.</p>
+  <p>일반 플래그는 최대 6개까지 입력하세요. 보너스 플래그는 아래 별도 영역에서 확인합니다.</p>
 </section>
 
 <section class="container flag-submit-section" aria-labelledby="flag-submit-title">
@@ -51,6 +51,43 @@
     {% if flag_result %}
       <p class="flag-result-note">입력한 6칸 중 중복을 제외하고 채점했습니다.</p>
     {% endif %}
+  </form>
+</section>
+
+<section class="container flag-submit-section bonus-submit-section" aria-labelledby="bonus-submit-title">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">Bonus</p>
+      <h2 id="bonus-submit-title">보너스 플래그</h2>
+    </div>
+    <p>보너스 페이지에서 받은 플래그를 입력하세요. 아직 보너스 문제를 풀지 않았다면 문제 페이지를 먼저 여세요.</p>
+  </div>
+  <form class="flag-submit-form bonus-flag-form" action="{% url 'bonus-flag-check' %}" method="post">
+    {% csrf_token %}
+    <div class="bonus-flag-row">
+      <label class="flag-input" for="bonus_flag">
+        <span>보너스 페이지에서 받은 플래그</span>
+        <input
+          id="bonus_flag"
+          name="bonus_flag"
+          type="text"
+          value=""
+          placeholder="보너스 플래그 입력"
+          autocomplete="off"
+          spellcheck="false"
+        >
+      </label>
+      <span class="bonus-badge">BONUS</span>
+    </div>
+    <div class="flag-submit-actions">
+      <button type="submit">보너스 확인</button>
+      <a class="flag-submit-link secondary-submit-link" href="{% url 'bonus-vault' %}">보너스 문제 열기</a>
+      {% if bonus_error %}
+        <output class="flag-result flag-result-error" aria-live="polite">
+          {{ bonus_error }}
+        </output>
+      {% endif %}
+    </div>
   </form>
 </section>
 {% endblock %}

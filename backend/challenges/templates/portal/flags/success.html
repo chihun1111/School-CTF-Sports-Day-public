@@ -4,11 +4,42 @@
 
 {% block content %}
 <section class="success-hero" aria-labelledby="success-title">
-  <div class="success-inner">
-    <p class="eyebrow">Completed</p>
-    <h1 id="success-title">특별 페이지</h1>
-    <p>모든 플래그를 확인했습니다. 운영자에게 이 화면을 보여주면 최종 확인을 받을 수 있습니다.</p>
-    <a class="primary-action" href="/">학과홈으로 돌아가기</a>
+  <div class="success-shell">
+    <div class="success-copy">
+      <p class="eyebrow">Mission Clear</p>
+      <h1 id="success-title">특별 페이지 입장 완료</h1>
+      <p class="success-lede">모든 플래그를 확인했습니다. 운영자에게 이 화면을 보여주면 최종 확인을 받을 수 있습니다.</p>
+    </div>
+
+    <div class="success-board" aria-label="플래그 확인 상태">
+      <div class="success-meter">
+        <span class="success-meter-value">6/6</span>
+        <span class="success-meter-label">플래그 확인 완료</span>
+      </div>
+
+      <ol class="success-summary" aria-label="완료 항목">
+        <li>
+          <span>01</span>
+          <strong>프론트엔드</strong>
+          <small>3개 확인</small>
+        </li>
+        <li>
+          <span>02</span>
+          <strong>백엔드</strong>
+          <small>3개 확인</small>
+        </li>
+        <li>
+          <span>03</span>
+          <strong>최종 확인</strong>
+          <small>운영자 확인 대기</small>
+        </li>
+      </ol>
+    </div>
+
+    <div class="success-actions">
+      <a class="primary-action" href="/">학과홈으로 돌아가기</a>
+      <a class="secondary-action" href="/flags/">제출 페이지</a>
+    </div>
   </div>
 </section>
 {% endblock %}

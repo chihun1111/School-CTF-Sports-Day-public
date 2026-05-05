@@ -1,9 +1,11 @@
 import secrets
 import time
+from urllib.parse import urlencode
 
 from django.core.cache import cache
 from django.core.signing import BadSignature
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 
 from challenges.flags import (
@@ -63,9 +65,32 @@ def _flag_success_key(token):
     return f'flag-check-success:{token}'
 
 
-def _grant_flag_success(response):
+def _flag_success_url(token):
+    return f'{reverse("flag-success")}?{urlencode({"access": token})}'
+
+
+def _reject_flag_success(token=None):
+    if token:
+        cache.delete(_flag_success_key(token))
+    response = redirect('flag-submit')
+    response.delete_cookie(FLAG_SUCCESS_COOKIE, samesite='Lax')
+    return response
+
+
+def _read_flag_success_cookie(request):
+    try:
+        return request.get_signed_cookie(
+            FLAG_SUCCESS_COOKIE,
+            max_age=FLAG_SUCCESS_TOKEN_SECONDS,
+        )
+    except (BadSignature, KeyError):
+        return None
+
+
+def _grant_flag_success():
     token = secrets.token_urlsafe(32)
     cache.set(_flag_success_key(token), True, FLAG_SUCCESS_TOKEN_SECONDS)
+    response = redirect(_flag_success_url(token))
     response.set_signed_cookie(
         FLAG_SUCCESS_COOKIE,
         token,
@@ -77,18 +102,22 @@ def _grant_flag_success(response):
 
 
 def flag_success(request):
-    try:
-        token = request.get_signed_cookie(
-            FLAG_SUCCESS_COOKIE,
-            max_age=FLAG_SUCCESS_TOKEN_SECONDS,
-        )
-    except (BadSignature, KeyError):
-        return redirect('flag-submit')
+    token = _read_flag_success_cookie(request)
+    access_token = request.GET.get('access', '')
+
+    if not token or not access_token:
+        return _reject_flag_success(token)
+
+    if not secrets.compare_digest(token, access_token):
+        return _reject_flag_success(token)
 
     if not cache.get(_flag_success_key(token)):
-        return redirect('flag-submit')
+        return _reject_flag_success(token)
 
-    return render(request, 'portal/flags/success.html')
+    cache.delete(_flag_success_key(token))
+    response = render(request, 'portal/flags/success.html')
+    response.delete_cookie(FLAG_SUCCESS_COOKIE, samesite='Lax')
+    return response
 
 
 @require_POST
@@ -105,7 +134,7 @@ def check_flags(request):
     flag_result = check_submitted_flags(submitted_flags)
 
     if flag_result['correct_count'] == flag_result['total_count']:
-        return _grant_flag_success(redirect('flag-success'))
+        return _grant_flag_success()
 
     return render(request, 'portal/flags/submit.html', _home_context(
         flag_result=flag_result,

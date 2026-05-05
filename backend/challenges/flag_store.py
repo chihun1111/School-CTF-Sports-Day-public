@@ -19,6 +19,7 @@ SECRET_NAMES = (
     'debug_api',
     'idor',
     'sqli',
+    'bonus',
 )
 
 KDF_ITERATIONS = 390000

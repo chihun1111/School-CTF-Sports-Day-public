@@ -13,6 +13,7 @@ ENV_BY_SECRET = {
     'debug_api': 'CTF_FLAG_DEBUG_API',
     'idor': 'CTF_FLAG_IDOR',
     'sqli': 'CTF_FLAG_SQLI',
+    'bonus': 'CTF_FLAG_BONUS',
 }
 
 

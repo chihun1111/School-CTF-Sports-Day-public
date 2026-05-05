@@ -28,15 +28,15 @@ class PortalTests(EncryptedFlagStoreMixin, TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, '컴퓨터공학과 통합 서비스')
-        self.assertContains(response, '미니 축제 안내')
+        self.assertContains(response, '행사 안내')
         self.assertContains(response, 'CTF 미니 축제')
-        self.assertContains(response, '축제 운영 관리')
+        self.assertContains(response, '운영 현황')
         self.assertContains(response, '체육대회 기간')
         self.assertContains(response, '재학생 모두 참가 가능')
         self.assertContains(response, '학교 서비스 상태 페이지')
-        self.assertContains(response, '과제 제출 확인')
-        self.assertContains(response, '학생 게시판 검색기')
-        self.assertContains(response, 'CTF 미니 축제')
+        self.assertContains(response, '제출 내역')
+        self.assertContains(response, '학생 게시판')
+        self.assertContains(response, '보너스 특별상 접수')
         self.assertIsNotNone(get_template('portal/index.html'))
         self.assertIsNotNone(finders.find('portal/styles.css'))
         self.assertFalse(Path(__file__).resolve().parents[3].joinpath('frontend').exists())
@@ -51,7 +51,7 @@ class PortalTests(EncryptedFlagStoreMixin, TestCase):
         response = self.client.get('/')
 
         self.assertContains(response, 'href="/flags/"')
-        self.assertContains(response, '플래그 제출')
+        self.assertContains(response, '제출 페이지')
         self.assertNotContains(response, 'name="flag_1"')
         self.assertNotContains(response, 'name="flag_6"')
 
@@ -68,6 +68,18 @@ class PortalTests(EncryptedFlagStoreMixin, TestCase):
         self.assertContains(response, 'name="flag_6"')
         self.assertNotContains(response, 'name="flag_7"')
         self.assertContains(response, '확인하기')
+
+    def test_flag_submit_page_renders_separate_bonus_flag_input(self):
+        response = self.client.get('/flags/')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '보너스 플래그')
+        self.assertContains(response, '보너스 페이지에서 받은 플래그')
+        self.assertContains(response, 'action="/bonus/flag-check/"')
+        self.assertContains(response, 'name="bonus_flag"')
+        self.assertContains(response, '보너스 확인')
+        self.assertContains(response, 'href="/bonus/vault/"')
+        self.assertContains(response, '보너스 문제 열기')
 
     def test_flag_checker_counts_unique_correct_flags_from_six_inputs(self):
         response = self.client.post('/flags/check/', {
@@ -93,14 +105,35 @@ class PortalTests(EncryptedFlagStoreMixin, TestCase):
         response = self.client.post('/flags/check/', ALL_FLAGS)
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['Location'], '/flags/success/')
+        self.assertTrue(response['Location'].startswith('/flags/success/?access='))
 
-        success_response = self.client.get('/flags/success/')
+        success_response = self.client.get(response['Location'])
         self.assertEqual(success_response.status_code, 200)
         self.assertContains(success_response, '특별 페이지')
         self.assertContains(success_response, '모든 플래그를 확인했습니다')
         for flag in TEST_FLAGS.values():
             self.assertNotContains(success_response, flag)
+
+    def test_special_page_blocks_direct_url_after_success_cookie_is_issued(self):
+        response = self.client.post('/flags/check/', ALL_FLAGS)
+
+        self.assertEqual(response.status_code, 302)
+
+        direct_response = self.client.get('/flags/success/')
+        self.assertEqual(direct_response.status_code, 302)
+        self.assertEqual(direct_response['Location'], '/flags/')
+
+    def test_special_page_access_link_is_single_use(self):
+        response = self.client.post('/flags/check/', ALL_FLAGS)
+
+        self.assertEqual(response.status_code, 302)
+
+        success_response = self.client.get(response['Location'])
+        self.assertEqual(success_response.status_code, 200)
+
+        replay_response = self.client.get(response['Location'])
+        self.assertEqual(replay_response.status_code, 302)
+        self.assertEqual(replay_response['Location'], '/flags/')
 
     def test_special_page_requires_completed_flag_check(self):
         response = self.client.get('/flags/success/')

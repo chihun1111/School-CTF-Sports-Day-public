@@ -13,6 +13,7 @@ TEST_FLAGS = {
     'debug_api': 'TESTFLAG{debug_api}',
     'idor': 'TESTFLAG{idor}',
     'sqli': 'TESTFLAG{sqli}',
+    'bonus': 'TESTFLAG{bonus_prize}',
 }
 
 
@@ -29,7 +30,10 @@ class EncryptedFlagStoreMixin:
         self.flag_db_password = 'test-db-password'
         self._flag_env = patch.dict(
             os.environ,
-            {'CTF_FLAG_DB_PASSWORD': self.flag_db_password},
+            {
+                'CTF_FLAG_DB_PASSWORD': self.flag_db_password,
+                'CTF_BONUS_TOKEN_KEY': 'test-bonus-token-key',
+            },
         )
         self._flag_env.start()
         self.addCleanup(self._flag_env.stop)
