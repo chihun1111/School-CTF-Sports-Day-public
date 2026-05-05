@@ -236,6 +236,10 @@ main > .search-form {
   text-decoration: none;
 }
 
+.notice-inner a + a {
+  margin-left: 0;
+}
+
 .page-head {
   width: min(1120px, calc(100% - 32px));
   margin: 34px auto 24px;
@@ -604,6 +608,103 @@ main > .search-form {
   font-size: 13px;
 }
 
+.hint-admin-section,
+.hint-list-section {
+  margin-bottom: 32px;
+}
+
+.hint-unlock-form {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 10px 22px rgb(24 50 71 / 5%);
+}
+
+.hint-unlock-form .flag-input {
+  max-width: 460px;
+}
+
+.hint-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.hint-card {
+  display: grid;
+  align-content: start;
+  min-height: 190px;
+  padding: 20px;
+  border: 1px solid #a9d4cf;
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: 0 10px 22px rgb(24 50 71 / 5%);
+}
+
+.hint-card-locked {
+  border-color: var(--line);
+  background: #f8faf9;
+  color: var(--muted);
+}
+
+.hint-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.hint-card-head .eyebrow {
+  margin: 0;
+}
+
+.hint-state {
+  display: inline-grid;
+  min-height: 28px;
+  place-items: center;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.hint-state-open {
+  border-color: #a9d4cf;
+  background: var(--soft);
+  color: var(--accent-dark);
+}
+
+.hint-card h2 {
+  margin: 0 0 10px;
+  color: var(--text);
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.hint-card p:not(.eyebrow) {
+  margin: 0;
+  line-height: 1.7;
+}
+
+.hint-source-link {
+  justify-self: start;
+  margin-top: 14px;
+  color: var(--accent-dark);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.hint-source-link:hover {
+  text-decoration: underline;
+}
+
 .success-hero {
   min-height: calc(100vh - 110px);
   padding: 64px 16px;
@@ -959,6 +1060,7 @@ tr:last-child td {
   .feature-grid,
   .info-grid,
   .flag-input-grid,
+  .hint-grid,
   .bonus-flag-row {
     grid-template-columns: 1fr;
   }

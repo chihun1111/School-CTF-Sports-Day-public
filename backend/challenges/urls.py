@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .endpoints import assignments, bonus, common, community, event_stations, status_panel
+from .endpoints import assignments, bonus, common, community, event_stations, hints, status_panel
 
 
 urlpatterns = [
@@ -8,6 +8,7 @@ urlpatterns = [
     path('flags/', common.flag_submit, name='flag-submit'),
     path('flags/check/', common.check_flags, name='flag-check'),
     path('flags/success/', common.flag_success, name='flag-success'),
+    path('hints/', hints.index, name='hints'),
     path('bonus/vault/', bonus.vault, name='bonus-vault'),
     path('bonus/check/', bonus.check, name='bonus-check'),
     path('bonus/flag-check/', bonus.flag_check, name='bonus-flag-check'),

@@ -37,3 +37,15 @@ class Submission(models.Model):
 
     def __str__(self):
         return f'{self.id}: {self.title}'
+
+
+class HintState(models.Model):
+    key = models.CharField(max_length=40, primary_key=True)
+    unlocked_count = models.PositiveSmallIntegerField(default=0)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'hint_state'
+
+    def __str__(self):
+        return f'{self.key}: {self.unlocked_count}'

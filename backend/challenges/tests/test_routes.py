@@ -13,6 +13,7 @@ class ChallengeRouteTests(EncryptedFlagStoreMixin, TestCase):
             '/student/assignments/',
             '/student/assignments/1/',
             '/community/board/',
+            '/hints/',
             '/frontend-01-html-comment/',
             '/frontend-02-sourcemap/',
             '/frontend-03-localstorage-admin/',
@@ -24,4 +25,3 @@ class ChallengeRouteTests(EncryptedFlagStoreMixin, TestCase):
         for alias in aliases:
             with self.subTest(alias=alias):
                 self.assertEqual(self.client.get(alias).status_code, 200)
-

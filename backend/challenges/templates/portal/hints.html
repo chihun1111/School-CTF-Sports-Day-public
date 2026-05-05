@@ -1,0 +1,73 @@
+{% extends 'portal/base.html' %}
+
+{% block title %}힌트 페이지{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <p class="eyebrow">Hints</p>
+  <h1>힌트 페이지</h1>
+  <p>관리자가 공개한 힌트만 모든 참가자에게 표시됩니다.</p>
+</section>
+
+<section class="container hint-admin-section" aria-labelledby="hint-admin-title">
+  <div class="section-title">
+    <div>
+      <p class="eyebrow">Admin</p>
+      <h2 id="hint-admin-title">힌트 공개</h2>
+    </div>
+    <p>현재 {{ unlocked_count }}개 / {{ total_hints }}개 공개 중입니다.</p>
+  </div>
+  <form class="hint-unlock-form" action="{% url 'hints' %}" method="post">
+    {% csrf_token %}
+    <label class="flag-input" for="admin_code">
+      <span>관리자 코드</span>
+      <input
+        id="admin_code"
+        name="admin_code"
+        type="password"
+        value=""
+        placeholder="관리자 코드 입력"
+        autocomplete="off"
+        spellcheck="false"
+      >
+    </label>
+    <div class="flag-submit-actions">
+      <button type="submit">힌트 공개</button>
+      {% if message %}
+        <output class="flag-result" aria-live="polite">{{ message }}</output>
+      {% endif %}
+      {% if error %}
+        <output class="flag-result flag-result-error" aria-live="polite">{{ error }}</output>
+      {% endif %}
+    </div>
+  </form>
+</section>
+
+<section class="container hint-list-section" aria-label="공개 힌트 목록">
+  <div class="hint-grid">
+    {% for hint in hints %}
+      <article class="hint-card{% if not hint.unlocked %} hint-card-locked{% endif %}">
+        <div class="hint-card-head">
+          <p class="eyebrow">Hint {{ hint.number }}</p>
+          {% if hint.unlocked %}
+            <span class="hint-state hint-state-open">공개</span>
+          {% else %}
+            <span class="hint-state">잠김</span>
+          {% endif %}
+        </div>
+        <h2>{{ hint.title }}</h2>
+        {% if hint.unlocked %}
+          <p>{{ hint.body }}</p>
+          {% if hint.url %}
+            <a class="hint-source-link" href="{{ hint.url }}" target="_blank" rel="noopener noreferrer">
+              {{ hint.link_label }}
+            </a>
+          {% endif %}
+        {% else %}
+          <p>관리자가 공개하면 표시됩니다.</p>
+        {% endif %}
+      </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
